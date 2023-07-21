@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY . .
 
-COPY ./conf/blog.conf /etc/nginx/conf.d
+COPY ./conf/default.conf /etc/nginx/conf.d
 
 EXPOSE 80
 
