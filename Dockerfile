@@ -1,6 +1,6 @@
 FROM nginx:alpine
 
-USER daemon
+USER root
 
 WORKDIR /app
 
