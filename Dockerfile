@@ -1,4 +1,4 @@
-FROM nginx:alpine
+FROM golang:alpine as build
 
 USER root
 
@@ -6,8 +6,14 @@ WORKDIR /app
 
 COPY . .
 
-COPY ./conf/default.conf /etc/nginx/conf.d
+RUN go build -o blog
 
-EXPOSE 80
+FROM alpine:latest 
 
-CMD ["nginx", "-g", "daemon off;"]
+COPY --from=build /app/blog .
+
+EXPOSE 3000
+
+CMD [ "/app/blog" ]
+
+# CMD ["nginx", "-g", "daemon off;"]
