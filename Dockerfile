@@ -14,6 +14,6 @@ COPY --from=build /app/blog .
 
 EXPOSE 3000
 
-CMD [ "/app/blog" ]
+CMD [ "/blog" ]
 
 # CMD ["nginx", "-g", "daemon off;"]
