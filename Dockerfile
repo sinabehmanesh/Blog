@@ -10,12 +10,6 @@ RUN go build -o blog
 
 FROM golang:alpine
 
-WORKDIR /app
-
-COPY --from=build /app/blog .
-
 EXPOSE 3000
 
 CMD [ "/app/blog" ]
-
-# CMD ["nginx", "-g", "daemon off;"]
