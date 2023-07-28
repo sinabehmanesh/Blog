@@ -8,7 +8,7 @@ COPY . .
 
 RUN go build -o blog
 
-FROM alpine:latest 
+FROM golang:alpine
 
 WORKDIR /app
 
