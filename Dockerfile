@@ -8,8 +8,6 @@ COPY . .
 
 RUN go build -o blog
 
-FROM golang:alpine
-
 EXPOSE 3000
 
 CMD [ "/app/blog" ]
