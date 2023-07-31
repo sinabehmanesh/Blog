@@ -3,6 +3,16 @@
     <title>Syslog</title>
 </head>
 <body>
-    <h3>Under construction!</h3>
+{{if .Success}}
+    <h1>welcome back my lord!</h1>
+{{else}}
+    <h1>Login</h1>
+    <form method="POST">
+        <label>Email:</label><br />
+        <input type="text" name="email"><br />
+        <label>Password:</label><br />
+        <input type="text" name="subject"><br />
+    </form>
+{{end}}
 </body>
 </html>
