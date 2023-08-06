@@ -5,10 +5,17 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	// "github.com/gorilla/mux"
 )
 
-// handlers defined on routes
+//ORM functions
+// func insertmessage(message string)  {
+// 	dsn := DBUSER":pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
+// 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
+// }
+
+// handlers defined on routes
 func homehandler(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles("index.html")
 	tmpl.Execute(w, nil)
