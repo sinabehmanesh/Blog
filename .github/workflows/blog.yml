@@ -3,10 +3,10 @@ run-name: blog deployment
 
 on:
   push:
-    branches: [main, dev]
+    branches: main
   
 jobs:
-  build-image:
+  setup-environment:
       runs-on: blog 
       steps:
         -
@@ -32,6 +32,9 @@ jobs:
           name: remove the old image
           run: docker rmi blog-app
       
+  build-image:
+    runs-on: blog
+    steps:
         -
           name: build image
           uses: docker/build-push-action@v4
@@ -41,6 +44,9 @@ jobs:
             push: false
             tags: blog-app:latest
 
+  deploy-image:
+    runs-on: blog
+    steps:
         -
           name: deploy using docker-compose plugin
           if: always()
