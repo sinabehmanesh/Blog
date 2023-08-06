@@ -27,11 +27,6 @@ jobs:
         -
           name: bring down the current deployment using docker-compose plugin
           run: docker compose down
-
-        -
-          name: remove the old image
-          if: always()
-          run: docker rmi blog-app
       
   build-image:
     needs: setup-environment
