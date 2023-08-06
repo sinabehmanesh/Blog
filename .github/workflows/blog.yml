@@ -33,6 +33,7 @@ jobs:
           run: docker rmi blog-app
       
   build-image:
+    needs: setup-environment
     runs-on: blog
     steps:
         -
@@ -45,6 +46,7 @@ jobs:
             tags: blog-app:latest
 
   deploy-image:
+    needs: build-image
     runs-on: blog
     steps:
         -
