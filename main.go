@@ -15,7 +15,10 @@ import (
 
 // }
 
+/////////////////
 // handlers defined on routes
+/////////////////
+
 func homehandler(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles("index.html")
 	tmpl.Execute(w, nil)
@@ -44,7 +47,7 @@ func contacthandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func adminhandler(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("./html/contact.html"))
+	tmpl := template.Must(template.ParseFiles("./html/admin.html"))
 	tmpl.Execute(w, nil)
 }
 
@@ -53,6 +56,9 @@ func thiswebsitehandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
+// ///////////////
+// Types
+// ///////////////
 type contact struct {
 	email   string
 	subject string
@@ -77,5 +83,3 @@ func main() {
 
 	http.ListenAndServe(":3000", r)
 }
-
-//dev-mux branch for mux development
