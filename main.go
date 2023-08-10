@@ -1,19 +1,12 @@
 package main
 
 import (
+	"blog/database"
 	"html/template"
 	"net/http"
 
 	"github.com/gorilla/mux"
-	// "github.com/gorilla/mux"
 )
-
-//ORM functions
-// func insertmessage(message string)  {
-// 	dsn := DBUSER":pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
-// 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-
-// }
 
 /////////////////
 // handlers defined on routes
@@ -44,6 +37,8 @@ func contacthandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, struct{ Success bool }{true})
 
 	_ = contactinfo.message
+
+	database.Insert_message()
 }
 
 func adminhandler(w http.ResponseWriter, r *http.Request) {
