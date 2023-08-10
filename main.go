@@ -1,11 +1,14 @@
 package main
 
 import (
-	"blog/database"
+	contactapi "blog/database"
 	"html/template"
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 )
 
 /////////////////
@@ -38,7 +41,7 @@ func contacthandler(w http.ResponseWriter, r *http.Request) {
 
 	_ = contactinfo.message
 
-	database.Insert_message()
+	contactapi.Insert_message()
 }
 
 func adminhandler(w http.ResponseWriter, r *http.Request) {
@@ -76,5 +79,11 @@ func main() {
 	r.HandleFunc("/thiswebsite", thiswebsitehandler)
 	http.Handle("/", r)
 
-	http.ListenAndServe(":3000", r)
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatalf("Can not load .env file!! Err: %s", err)
+	}
+
+	port := os.Getenv("API_PORT")
+	http.ListenAndServe(":"+port, r)
 }
