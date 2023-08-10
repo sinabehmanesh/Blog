@@ -29,5 +29,5 @@ volumes:
 
 networks:
   blog-network:
-    name: network-blog
+    name: blog-network
     external: true
