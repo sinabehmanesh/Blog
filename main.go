@@ -32,16 +32,20 @@ func contacthandler(w http.ResponseWriter, r *http.Request) {
 		tmpl.Execute(w, nil)
 		return
 	}
-	contactinfo := contact{
-		email:   r.FormValue("email"),
-		subject: r.FormValue("subject"),
-		message: r.FormValue("message"),
-	}
+	//	contactinfo := Contact{
+	//		email:   r.FormValue("email"),
+	//		subject: r.FormValue("subject"),
+	//		message: r.FormValue("message"),
+	//	}
+
+	contactemail := r.FormValue("email")
+	contactsubject := r.FormValue("subject")
+	contactmessage := r.FormValue("message")
+
 	tmpl.Execute(w, struct{ Success bool }{true})
 
-	_ = contactinfo.message
-
-	contactapi.Insert_message()
+	//call contact database function to submit message to database
+	contactapi.Insert_message(contactemail, contactsubject, contactmessage)
 }
 
 func adminhandler(w http.ResponseWriter, r *http.Request) {
@@ -52,15 +56,6 @@ func adminhandler(w http.ResponseWriter, r *http.Request) {
 func thiswebsitehandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("./html/thiswebsite.html"))
 	tmpl.Execute(w, nil)
-}
-
-// ///////////////
-// Types
-// ///////////////
-type contact struct {
-	email   string
-	subject string
-	message string
 }
 
 func main() {
