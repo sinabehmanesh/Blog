@@ -5,6 +5,7 @@ USER root
 WORKDIR /app
 
 COPY . .
+
 COPY .env .
 
 RUN go build -o blog main.go
