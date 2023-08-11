@@ -3,10 +3,10 @@ run-name: blog deployment
 
 on:
   push:
-    branches: main
+    branches: [main, dev]
   
 jobs:
-  setup-environment:
+  Configure-environment:
       runs-on: blog 
       steps:
         -
@@ -17,6 +17,15 @@ jobs:
           name: image buildx setup
           uses: docker/setup-buildx-action@v1
         
+        -
+          name: Configure .env file
+          run: |
+            ls -a ;
+            pwd ;
+            sed -i 's/DB_USERNAME=/DB_USERNAME=${{ secrets.PROD_DB_USERNAME }}/g' .env
+            sed -i 's/DB_PASSWORD=/DB_PASSWORD=${{ secrets.PROD_DB_PASSWORD }}/g' .env
+            sed -i 's/DB_HOST=/DB_HOST=${{ secrets.PROD_DB_HOST }}/g' .env
+            sed -i 's/DB_PORT=/DB_PORT=${{ secrets.PROD_DB_PORT }}/g' .env
         # -
           # name: login to docker
           # uses: docker/login-action@v2
@@ -27,14 +36,9 @@ jobs:
         -
           name: bring down the current deployment using docker-compose plugin
           run: docker compose down
-
-        -
-          name: remove the old image
-          if: always()
-          run: docker rmi blog-app
       
-  build-image:
-    needs: setup-environment
+  Build-image:
+    needs: Configure-environment
     runs-on: blog
     steps:
         -
@@ -46,8 +50,8 @@ jobs:
             push: false
             tags: blog-app:latest
 
-  deploy-image:
-    needs: build-image
+  Deploy-image:
+    needs: Build-image
     runs-on: blog
     steps:
         -

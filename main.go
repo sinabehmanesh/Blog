@@ -1,21 +1,20 @@
 package main
 
 import (
+	contactapi "blog/database"
 	"html/template"
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
-	// "github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 )
 
-//ORM functions
-// func insertmessage(message string)  {
-// 	dsn := DBUSER":pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
-// 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-
-// }
-
+/////////////////
 // handlers defined on routes
+/////////////////
+
 func homehandler(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles("index.html")
 	tmpl.Execute(w, nil)
@@ -33,30 +32,30 @@ func contacthandler(w http.ResponseWriter, r *http.Request) {
 		tmpl.Execute(w, nil)
 		return
 	}
-	contactinfo := contact{
-		email:   r.FormValue("email"),
-		subject: r.FormValue("subject"),
-		message: r.FormValue("message"),
-	}
+	//	contactinfo := Contact{
+	//		email:   r.FormValue("email"),
+	//		subject: r.FormValue("subject"),
+	//		message: r.FormValue("message"),
+	//	}
+
+	contactemail := r.FormValue("email")
+	contactsubject := r.FormValue("subject")
+	contactmessage := r.FormValue("message")
+
 	tmpl.Execute(w, struct{ Success bool }{true})
 
-	_ = contactinfo.message
+	//call contact database function to submit message to database
+	contactapi.Insert_message(contactemail, contactsubject, contactmessage)
 }
 
 func adminhandler(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("./html/contact.html"))
+	tmpl := template.Must(template.ParseFiles("./html/admin.html"))
 	tmpl.Execute(w, nil)
 }
 
 func thiswebsitehandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("./html/thiswebsite.html"))
 	tmpl.Execute(w, nil)
-}
-
-type contact struct {
-	email   string
-	subject string
-	message string
 }
 
 func main() {
@@ -75,7 +74,11 @@ func main() {
 	r.HandleFunc("/thiswebsite", thiswebsitehandler)
 	http.Handle("/", r)
 
-	http.ListenAndServe(":3000", r)
-}
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatalf("Can not load .env file!! Err: %s", err)
+	}
 
-//dev-mux branch for mux development
+	port := os.Getenv("API_PORT")
+	http.ListenAndServe(":"+port, r)
+}
