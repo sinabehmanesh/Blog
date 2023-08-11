@@ -21,19 +21,18 @@ type contact struct {
 	date    string
 }
 
-func Insert_message(email string, subject string, message string) {
+func Insert_message(contactemail string, contactsubject string, contactmessage string) {
 
 	dt := time.Now()
 
 	// printing the time in string format
 	nowdate := dt.Format(time.RFC3339)
 
-	contactmessage := contact{
-		email:   email,
-		subject: subject,
-		message: message,
-		date:    nowdate,
-	}
+	var record contact
+	record.email = contactemail
+	record.subject = contactsubject
+	record.message = contactmessage
+	record.date = nowdate
 
 	///////////////////////
 	// Database credentials
@@ -56,7 +55,7 @@ func Insert_message(email string, subject string, message string) {
 	}
 	_ = db
 
-	resault := db.Create(&contactmessage)
+	resault := db.Create(&record)
 
 	fmt.Println(resault.Statement)
 
