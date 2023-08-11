@@ -9,6 +9,8 @@ import (
 
 	"github.com/joho/godotenv"
 	"gorm.io/gorm"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 // ///////////////
@@ -59,7 +61,13 @@ func Insert_message(contactemail string, contactsubject string, contactmessage s
 	}
 	db.Ping()
 
-	query := `INSERT INTO contacts (email, subject, message, date) VALUES (` + record.email + `,` + record.subject + "," + record.message + "," + nowdate + ");"
+	query := `INSERT INTO contacts (email, subject, message, date) VALUES ("` + record.email + `", "` + record.subject + `", "` + record.message + `", "` + nowdate + `");`
 
-	fmt.Println(query)
+	result, err := db.Exec(query)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(result.LastInsertId())
 }
