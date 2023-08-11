@@ -28,12 +28,13 @@ func Insert_message(contactemail string, contactsubject string, contactmessage s
 	// printing the time in string format
 	nowdate := dt.Format(time.RFC3339)
 
-	var record contact
-	record.email = contactemail
-	record.subject = contactsubject
-	record.message = contactmessage
-	record.date = nowdate
+	// var record contact
+	// record.email = contactemail
+	// record.subject = contactsubject
+	// record.message = contactmessage
+	// record.date = nowdate
 
+	record := contact{email: "sina@sina.com", subject: "api test", message: "this is sent from api", data: "today!"}
 	///////////////////////
 	// Database credentials
 	///////////////////////
@@ -55,8 +56,8 @@ func Insert_message(contactemail string, contactsubject string, contactmessage s
 	}
 	_ = db
 
-	resault := db.Create(&record)
+	result := db.Create(&record)
 
-	fmt.Println(resault.Statement)
-
+	fmt.Println(result.Statement)
+	fmt.Println(result.RowsAffected)
 }
