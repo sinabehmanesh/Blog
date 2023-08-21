@@ -26,7 +26,7 @@ type Contact struct {
 
 type Contacts []Contact
 
-func Insert_message(contactemail string, contactsubject string, contactmessage string) {
+func Insert_message(contactemail string, contactsubject string, contactmessage string) error {
 
 	dt := time.Now()
 
@@ -70,4 +70,6 @@ func Insert_message(contactemail string, contactsubject string, contactmessage s
 	}
 
 	fmt.Println(result.LastInsertId())
+
+	return err
 }

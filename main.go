@@ -1,7 +1,9 @@
 package main
 
 import (
+	adminapi "blog/admin"
 	contactapi "blog/database"
+
 	"html/template"
 	"log"
 	"net/http"
@@ -32,11 +34,6 @@ func contacthandler(w http.ResponseWriter, r *http.Request) {
 		tmpl.Execute(w, nil)
 		return
 	}
-	//	contactinfo := Contact{
-	//		email:   r.FormValue("email"),
-	//		subject: r.FormValue("subject"),
-	//		message: r.FormValue("message"),
-	//	}
 
 	contactemail := r.FormValue("email")
 	contactsubject := r.FormValue("subject")
@@ -45,16 +42,34 @@ func contacthandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, struct{ Success bool }{true})
 
 	//call contact database function to submit message to database
-	contactapi.Insert_message(contactemail, contactsubject, contactmessage)
+	err := contactapi.Insert_message(contactemail, contactsubject, contactmessage)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
 }
 
 func adminhandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("./html/admin.html"))
-	tmpl.Execute(w, nil)
+
+	if r.Method != http.MethodPost {
+		tmpl.Execute(w, nil)
+		return
+	}
+
+	tmpl.Execute(w, struct{ Success bool }{true})
+
+	adminapi.Login(w, r)
 }
 
 func thiswebsitehandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("./html/thiswebsite.html"))
+	tmpl.Execute(w, nil)
+}
+
+func aboutmehandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("./html/aboutme.html"))
 	tmpl.Execute(w, nil)
 }
 
@@ -72,6 +87,7 @@ func main() {
 	r.HandleFunc("/syslog", sysloghandler)
 	r.HandleFunc("/contact", contacthandler)
 	r.HandleFunc("/thiswebsite", thiswebsitehandler)
+	r.HandleFunc("/aboutme", aboutmehandler)
 	http.Handle("/", r)
 
 	err := godotenv.Load(".env")

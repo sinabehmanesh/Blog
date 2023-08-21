@@ -31,7 +31,12 @@ func Login(w http.ResponseWriter, r *http.Request) string {
 
 	if adminemail == "sina@sina.com" && adminpassword == "sinasinasina" {
 		session.Values["authenticated"] = true
-		session.Save(r, w)
+		err := session.Save(r, w)
+		if err != nil {
+			return "validation failed!"
+		} else {
+			return "Login Successful!"
+		}
 	} else {
 		http.Error(w, "Forbidden", http.StatusForbidden)
 		return "Wrong input, Forbidden!"
