@@ -30,6 +30,7 @@ an automated backup will be activated soon, I am planning to implement it using 
 Mysql deployment is bare-metal and not managed on containerized. it is a single instance of MySQL serving data to API.
 
 ### Server
+An Ubuntu server is up and running!
 on the server we are exposing this website using **Nginx**, I have defined an upstream and some proxy_pass so the external request finds its safe Path to the website Edge. I also customized the Nginx logging in case I wanted to aggregate logs in the future.
 
 ### CICD
