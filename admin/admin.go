@@ -1,7 +1,7 @@
 package admin
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/sessions"
@@ -13,17 +13,17 @@ var (
 	store = sessions.NewCookieStore(key)
 )
 
-func secret(w http.ResponseWriter, r *http.Request) {
-	session, _ := store.Get(r, "authentication-status")
-	if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
-		http.Error(w, "Forbidden", http.StatusForbidden)
-		return
-	}
+// func secret(w http.ResponseWriter, r *http.Request) {
+// 	session, _ := store.Get(r, "authentication-status")
+// 	if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
+// 		http.Error(w, "Forbidden", http.StatusForbidden)
+// 		return
+// 	}
 
-	fmt.Fprintln(w, "james lied about us!")
-}
+// 	fmt.Fprintln(w, "james lied about us!")
+// }
 
-func Login(w http.ResponseWriter, r *http.Request) string {
+func Login(w http.ResponseWriter, r *http.Request) {
 	session, _ := store.Get(r, "authentication-status")
 
 	adminemail := r.FormValue("adminemail")
@@ -31,10 +31,9 @@ func Login(w http.ResponseWriter, r *http.Request) string {
 
 	if adminemail == "sina@sina.com" && adminpassword == "sinasinasina" {
 		session.Values["authenticated"] = true
-		session.Save(r, w)
-	} else {
-		http.Error(w, "Forbidden", http.StatusForbidden)
-		return "Wrong input, Forbidden!"
+		err := session.Save(r, w)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
-
 }
