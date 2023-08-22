@@ -5,9 +5,9 @@ all the API and Frontend source codes are hosted here.
 
 > Reach the website at [sinabehmanesh.com](https://sinabehmanesh.com)
 
-## Tech stack
 
-# API
+## Tech stack
+### API
 API is written in **Golang**.
 Using **MUX** for serving and server-side routings. it's simple and easy.
 Mysql connection and CRUD are handled by Golang native **Mysql-driver** and **GORM** will take its place soon.
@@ -19,20 +19,20 @@ This Backend has integrations with:
 
 
 
-# Frontend
+### Frontend
 Frontend is just **HTML**, you can find more on index.html.
 I do not have any Frontend knowledge and this ancient theme(it's like 90s) for the website suits it. I like it!
 
 
-# Database
+### Database
 **Mysql-server** version **8** is operational as database. its connection is exposed over PORT and not Socket!
 an automated backup will be activated soon, I am planning to implement it using **SHELL** script.
 Mysql deployment is bare-metal and not managed on containerized. it is a single instance of MySQL serving data to API.
 
-# Server
+### Server
 on the server we are exposing this website using **Nginx**, I have defined an upstream and some proxy_pass so the external request finds its safe Path to the website Edge. I also customized the Nginx logging in case I wanted to aggregate logs in the future.
 
-# CICD
+### CICD
 deployment pipeline is using **Github Action** and selfhosted runners to **BUILD - DEPLOY - TEST** application.
 API and Frontend are being deployed using docker, checkout Dockerfile and workflow to find more about the details.
 
