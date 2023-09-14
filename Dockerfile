@@ -6,7 +6,9 @@ WORKDIR /app
 
 COPY . .
 
-RUN go build -o blog
+COPY .env .
+
+RUN go build -o blog main.go
 
 EXPOSE 3000
 
