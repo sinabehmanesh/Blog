@@ -4,6 +4,7 @@ metadata:
   name: blog-deployment
   labels:
     deploymet: blog
+    app: blog
   namespace: blog
 spec:
   replicas: 2
