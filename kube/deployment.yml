@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blog-deployment
+  labels:
+    deploymet: blog
+    app: blog
+  namespace: blog
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: blog
+
+  template:
+    metadata:
+      labels:
+        app: blog
+    
+    spec:
+      containers:
+      - name: app  
+        image: blog:latest
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
