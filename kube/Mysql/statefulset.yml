@@ -41,8 +41,9 @@ spec:
             mountPath: /mnt/conf.d/
           - name: config-map 
             mountPath: /mnt/config-map
+
         - name: clone-mysql
-          image: mysql:8.1
+          image: gcr.io/google-samples/xtrabackup:1.0
           command:
           - bash
           - "-c"
@@ -64,6 +65,10 @@ spec:
             subPath: mysql
           - name: conf
             mountPath: /etc/mysql/conf.d
+
+
+
+#Containers section
       containers:
       - name: mysql
         image: mysql:8.1
