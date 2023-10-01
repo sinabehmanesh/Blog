@@ -11,7 +11,7 @@ deployment:
   replicaCount: 2
 
   image:
-    name: blog
+    name: blog-app
     version: latest
     repository: hub
     pullPolicy: IfNotPresent
