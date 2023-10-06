@@ -48,8 +48,8 @@ jobs:
             -
                 name: helm package and push
                 run: |
-                    helm package blog ./blog-chart
-                    helm push blog-* oci://registry-1.docker.io/sinabehmanesh/helm-charts
+                    helm package blog-chart
+                    helm push blog-chart-* oci://registry-1.docker.io/sinabehmanesh/helm-charts
 
 
 
