@@ -25,8 +25,8 @@ jobs:
                 run: |
                     ls -a ;
                     pwd ;
-                    echo "blog-app:${GITHUB_SHA}" >> $Imagetag
-                    echo $GITHUB_SHA
+                    echo "blog-app:${GITHUB_SHA}"
+                    export Imagetag="blog-app:${GITHUB_SHA}"
                 
             -
                 name: build docker image
