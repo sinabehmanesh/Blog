@@ -6,7 +6,7 @@ on:
         branches: [kube-migration]
 
 env:
-    ImageSHA: 
+    ImageSHA: $GITHUB_SHA
 
 jobs:
     fetch-build:
@@ -28,23 +28,14 @@ jobs:
                     echo "blog-app:${GITHUB_SHA}"
                     export Imagetag="blog-app:${GITHUB_SHA}"
                     echo $Imagetag
-                
-            -
-                name: docker metadata
-                id: meta
-                uses: docker/metadata-action@v5
-                with:
-                    images: |
-                        blog-app
-                    tags: |
-                        imagetag=$Imagetag
+
             -
                 name: build docker image
                 uses: docker/build-push-action@v5
                 with:
                     context: .
                     file: ./Dockerfile
-                    tags: ${{ steps.meta.outputs.tags }}
+                    tags: blog/app:${{ env.ImageSHA }}
 
     # helm-package:
     #     runs-on: home
