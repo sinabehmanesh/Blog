@@ -38,7 +38,8 @@ jobs:
                     context: .
                     file: ./Dockerfile
                     push: true
-                    tags: ${{ secrets.Registry_Username }}/blog-app:${{ vars.Imagetag }}
+                    tags: |
+                      ${{ secrets.Registry_Username }}/blog:${{ vars.Imagetag }}
 
     # helm-package:
     #     runs-on: home
