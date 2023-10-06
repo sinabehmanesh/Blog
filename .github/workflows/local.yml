@@ -38,7 +38,13 @@ jobs:
                     context: .
                     file: ./Dockerfile
                     push: true
-                    tags: "sinabehmanesh/blog:${{ vars.Imagetag }}"
+                    tags: sinabehmanesh/blog:latest
+            
+            -
+                name: helm package
+                run: |
+                    helm lint blog-chart
+
 
     # helm-package:
     #     runs-on: home
