@@ -27,6 +27,7 @@ jobs:
                     pwd ;
                     echo "blog-app:${GITHUB_SHA}"
                     export Imagetag="blog-app:${GITHUB_SHA}"
+                    echo $Imagetag
                 
             -
                 name: build docker image
@@ -35,7 +36,7 @@ jobs:
                     context: .
                     file: ./Dockerfile
                     push: false
-                    tags: $Imagetag
+                    tags: $GITHUB_SHA
 
     # helm-package:
     #     runs-on: home
