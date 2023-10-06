@@ -38,7 +38,7 @@ jobs:
                     context: .
                     file: ./Dockerfile
                     push: true
-                    tags: sinabehmanesh/blog:latest
+                    tags: sinabehmanesh/blog:latest,${{ secrets.REGISTRY_USERNAME }}/blog:${{ env.Imagetag }}
 
     # helm-package:
     #     runs-on: home
