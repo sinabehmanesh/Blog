@@ -6,7 +6,7 @@ on:
         branches: [kube-migration]
 
 env:
-    ImageSHA: $GITHUB_SHA
+    ImageSHA: "blog-app:${GITHUB_SHA}"
 
 jobs:
     fetch-build:
@@ -25,7 +25,6 @@ jobs:
                 run: |
                     ls -a ;
                     pwd ;
-                    echo "blog-app:${GITHUB_SHA}"
                     export Imagetag="blog-app:${GITHUB_SHA}"
                     echo $Imagetag
                     echo $ImageSHA
@@ -36,7 +35,8 @@ jobs:
                 with:
                     context: .
                     file: ./Dockerfile
-                    tags: blog/app:${{ env.ImageSHA }}
+                    push: false
+                    tags: ${{ vars.Imagetag }}
 
     # helm-package:
     #     runs-on: home
