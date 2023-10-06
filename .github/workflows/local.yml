@@ -25,7 +25,7 @@ jobs:
                 run: |
                     ls -a ;
                     pwd ;
-                    echo "blog-app:${GITHUB_SHA}"
+                    echo "blog-app:${GITHUB_SHA}" >> $Imagetag
                     echo $GITHUB_SHA
                 
             -
@@ -35,7 +35,7 @@ jobs:
                     context: .
                     file: ./Dockerfile
                     push: false
-                    tags: blog-app:${GITHUB_SHA}
+                    tags: blog-app:${Imagetag}
 
     # helm-package:
     #     runs-on: home
