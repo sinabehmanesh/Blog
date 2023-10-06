@@ -45,6 +45,13 @@ jobs:
                 run: |
                     helm lint blog-chart
 
+            -
+                name: helm package and push
+                run: |
+                    helm package blog ./blog-chart
+                    helm push blog-* oci://registry-1.docker.io/sinabehmanesh/helm-charts
+
+
 
     # helm-package:
     #     runs-on: home
