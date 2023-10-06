@@ -25,8 +25,7 @@ jobs:
                 run: |
                     ls -a ;
                     pwd ;
-                    echo "blog-app:${GITHUB_SHA}" >> $ImageTag
-                    echo $ImageTag
+                    echo "blog-app:${GITHUB_SHA}"
                     echo $GITHUB_SHA
                 
             -
