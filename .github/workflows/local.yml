@@ -3,7 +3,7 @@ run-name: Localhost Deployment
     
 on:
     push: 
-        branches: [kube-migration]
+        branches: [local-dev]
 
 jobs:
     fetch-build:
