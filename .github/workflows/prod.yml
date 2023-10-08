@@ -26,6 +26,7 @@ jobs:
             sed -i 's/DB_PASSWORD=/DB_PASSWORD=${{ secrets.PROD_DB_PASSWORD }}/g' .env
             sed -i 's/DB_HOST=/DB_HOST=${{ secrets.PROD_DB_HOST }}/g' .env
             sed -i 's/DB_PORT=/DB_PORT=${{ secrets.PROD_DB_PORT }}/g' .env
+            sed -i 's/API_PORT=/API_PORT=${{ secrets.API_PORT }}/g' .env
         # -
           # name: login to docker
           # uses: docker/login-action@v2
