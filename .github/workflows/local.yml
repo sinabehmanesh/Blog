@@ -53,6 +53,7 @@ jobs:
                     helm push blog-chart-* oci://registry-1.docker.io/sinabehmanesh
 
 
+#Using terraform to deploy helm charts.
 
     # helm-package:
     #     runs-on: home
