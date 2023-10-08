@@ -1,0 +1,12 @@
+apiVersion: v2
+name: blog-chart
+description: A Helm chart for blog deployment in dev envorinment
+maintainers:
+- email: sina.behmanesh1999@gmail.com
+  name: sinabehmanesh
+
+type: application
+
+version: 0.1.0
+
+appVersion: "0.1.0"

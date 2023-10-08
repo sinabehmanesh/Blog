@@ -3,7 +3,7 @@ run-name: blog deployment
 
 on:
   push:
-    branches: [main, dev]
+    branches: [main]
   
 jobs:
   Configure-environment:
