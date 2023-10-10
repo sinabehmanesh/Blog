@@ -4,7 +4,7 @@ provider "helm" {
     }
 }
 
-resource "helm_release" {
+resource "helm_release" "blog" {
     name = "blog"
     repositroy = "oci://registry-1.docker.io/sinabehmanesh"
     chart = "blog-chart
