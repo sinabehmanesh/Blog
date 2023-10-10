@@ -1,6 +1,9 @@
 name: Blog local
 run-name: Localhost Deployment
-    
+
+env:
+    TF_WORKSPACE: "./terraform"
+
 on:
     push: 
         branches: [local-dev]
@@ -52,6 +55,35 @@ jobs:
                     helm package blog-chart
                     helm push blog-chart-* oci://registry-1.docker.io/sinabehmanesh
 
+    terraform-deploy:
+        runs-on: home
+        defaults:
+            run:
+                working-directory: "terraform"
+        steps:
+            -
+                name: login to docker hub
+                uses: docker/login-action@v3
+                with:
+                    username: ${{ secrets.Registry_Username }}
+                    password: ${{ secrets.Registry_Password }}
+
+            -
+                name: fetch code
+                uses: actions/checkout@v3
+
+            -
+                name: configure env variables
+                run: |
+                    ls -a ;
+                    pwd ;
+                    sed -i 's/config_path =/config_path = "${{ secrets.LOCAL_CLUSTER_KUBE_CONFIG }}"/g' main.tf
+
+            -
+                name: apply terraform and auto approve
+                uses: terraform validate
+
+            
 
 #Using terraform to deploy helm charts.
 
