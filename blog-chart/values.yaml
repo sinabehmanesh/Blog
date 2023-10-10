@@ -14,7 +14,7 @@ deployment:
     name: blog-app
     version: latest
     repository: hub
-    pullPolicy: Always
+    pullPolicy: Never
     # Overrides the image tag whose default is the chart appVersion.
     tag: ""
 
