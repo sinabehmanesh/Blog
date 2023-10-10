@@ -54,6 +54,7 @@ jobs:
 
     terraform-deploy:
         runs-on: home
+        needs: fetch-build
         defaults:
             run:
                 working-directory: "terraform"
