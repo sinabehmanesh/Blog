@@ -59,12 +59,12 @@ jobs:
             run:
                 working-directory: "terraform"
         steps:
-            -
-                name: login to docker hub
-                uses: docker/login-action@v3
-                with:
-                    username: ${{ secrets.Registry_Username }}
-                    password: ${{ secrets.Registry_Password }}
+            # -
+            #     name: login to docker hub
+            #     uses: docker/login-action@v3
+            #     with:
+            #         username: ${{ secrets.Registry_Username }}
+            #         password: ${{ secrets.Registry_Password }}
 
             -
                 name: fetch code
