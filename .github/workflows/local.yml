@@ -75,12 +75,19 @@ jobs:
                 run: |
                     ls -a ;
                     pwd ;
-                    sed -i 's/config_path=""/config_path=${{ secrets.LOCAL_CLUSTER_KUBE_CONFIG }}/g' main.tf
+                    cat <<EOT >> variables.tf
+                    variable "config_path" {
+                        description = "address to the kubectl config file"
+                        type = string
+                        default = "${{ secrets.LOCAL_CLUSTER_KUBE_CONFIG }}"
+                    }
+                    EOT
 
             -
                 name: apply terraform and auto approve
                 run: |
                     terraform validate
+                    terraform plan
 
             
 
