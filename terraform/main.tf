@@ -1,4 +1,4 @@
-required_providers "helm" {
+provider "helm" {
     kubernetes {
         config_path = var.config_path
     }
