@@ -1,9 +1,6 @@
 name: Blog local
 run-name: Localhost Deployment
 
-env:
-    TF_WORKSPACE: "./terraform"
-
 on:
     push: 
         branches: [local-dev]
@@ -81,7 +78,8 @@ jobs:
 
             -
                 name: apply terraform and auto approve
-                uses: terraform validate
+                run: |
+                    terraform validate
 
             
 
