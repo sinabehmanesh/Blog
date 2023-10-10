@@ -86,6 +86,7 @@ jobs:
             -
                 name: apply terraform and auto approve
                 run: |
+                    terraform init
                     terraform validate
                     terraform plan
 
