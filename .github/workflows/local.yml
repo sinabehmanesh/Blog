@@ -75,7 +75,7 @@ jobs:
                 run: |
                     ls -a ;
                     pwd ;
-                    sed -i 's/config_path = ""/config_path = "${{ secrets.LOCAL_CLUSTER_KUBE_CONFIG }}"/g' main.tf
+                    sed -i 's/config_path=""/config_path=${{ secrets.LOCAL_CLUSTER_KUBE_CONFIG }}/g' main.tf
 
             -
                 name: apply terraform and auto approve
