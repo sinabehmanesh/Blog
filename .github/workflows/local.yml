@@ -1,5 +1,5 @@
 name: Blog local
-run-name: Localhost Deployment
+run-name: Localhost Deployment for $GITHUB_REF_TYPE
 
 on:
     push: 
