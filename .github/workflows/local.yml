@@ -1,5 +1,5 @@
 name: Blog local
-run-name: Localhost Deployment for ${ GITHUB_REF_TYPE }
+run-name: Localhost Deployment
 
 on:
     push: 
@@ -89,6 +89,7 @@ jobs:
                     terraform init
                     terraform validate
                     terraform plan
+                    terraform apply -auto-approve
 
             
 
