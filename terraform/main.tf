@@ -6,6 +6,6 @@ provider "helm" {
 
 resource "helm_release" "blog" {
     name = "blog"
-    repositroy = "oci://registry-1.docker.io/sinabehmanesh"
+    repository = "oci://registry-1.docker.io/sinabehmanesh"
     chart = "blog-chart"
 }
