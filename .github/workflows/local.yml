@@ -82,7 +82,7 @@ jobs:
                         default = "${{ secrets.LOCAL_CLUSTER_KUBE_CONFIG }}"
                     }
                     EOT
-
+                    cat variables.tf
             -
                 name: apply terraform and auto approve
                 run: |
