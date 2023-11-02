@@ -1,13 +1,13 @@
 name: Blog local
 run-name: Localhost Deployment
-    
+
 on:
     push: 
-        branches: [kube-migration]
+        branches: [local-dev]
 
 jobs:
     fetch-build:
-        runs-on: ubuntu-latest
+        runs-on: home
         steps:
             - 
                 name: fetch code
@@ -26,20 +26,20 @@ jobs:
                     export Imagetag="blog-app:${GITHUB_SHA}"
                     echo $Imagetag
 
-            -
-                name: login to docker hub
-                uses: docker/login-action@v3
-                with:
-                    username: ${{ secrets.Registry_Username }}
-                    password: ${{ secrets.Registry_Password }}
+            # -
+                # name: login to docker hub
+                # uses: docker/login-action@v3
+                # with:
+                #     username: ${{ secrets.Registry_Username }}
+                #     password: ${{ secrets.Registry_Password }}
             -
                 name: build docker image
                 uses: docker/build-push-action@v5
                 with:
                     context: .
                     file: ./Dockerfile
-                    push: true
-                    tags: sinabehmanesh/blog:latest
+                    push: false
+                    tags: sinabehmanesh/blog:latest,blog-app:latest
             
             -
                 name: helm package
@@ -50,9 +50,50 @@ jobs:
                 name: helm package and push
                 run: |
                     helm package blog-chart
-                    helm push blog-chart-* oci://registry-1.docker.io/sinabehmanesh
+                    helm push blog-chart-* oci://registry-1.docker.io/sinabehmanesh || true
 
+    terraform-deploy:
+        runs-on: home
+        needs: fetch-build
+        defaults:
+            run:
+                working-directory: "terraform"
+        steps:
+            # -
+            #     name: login to docker hub
+            #     uses: docker/login-action@v3
+            #     with:
+            #         username: ${{ secrets.Registry_Username }}
+            #         password: ${{ secrets.Registry_Password }}
 
+            -
+                name: fetch code
+                uses: actions/checkout@v3
+
+            -
+                name: configure env variables
+                run: |
+                    ls -a ;
+                    pwd ;
+                    cat <<EOT >> variables.tf
+                    variable "config_path" {
+                        description = "address to the kubectl config file"
+                        type = string
+                        default = "${{ secrets.LOCAL_CLUSTER_KUBE_CONFIG }}"
+                    }
+                    EOT
+                    cat variables.tf
+            -
+                name: apply terraform and auto approve
+                run: |
+                    terraform init
+                    terraform validate
+                    terraform plan
+                    terraform apply -auto-approve
+
+            
+
+#Using terraform to deploy helm charts.
 
     # helm-package:
     #     runs-on: home
