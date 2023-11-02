@@ -4,6 +4,7 @@ import (
 	adminapi "blog/admin"
 	contactapi "blog/database"
 
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -96,5 +97,7 @@ func main() {
 	}
 
 	port := os.Getenv("API_PORT")
+
+	fmt.Println("starting server on port:", port)
 	http.ListenAndServe(":"+port, r)
 }
