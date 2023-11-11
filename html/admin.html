@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <head>
+    <style>
+        html{
+            background-color: #233041;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #f2f2f2;
+        }
+    </style>
     <title>Login</title>
 </head>
 
-<body style="background-color: black;">
+<body>
     {{if .Success}}
-    <h1>Welcome back my lord!</h1>
+    <h1 style="color: #ff8802;">Welcome back my lord!</h1>
     {{else}}
-    <div style="text-align: center; color: aliceblue; margin-top: 10%;">
-        <h1 style="text-align: center; ">Admin Login</h1>
+    <div style="text-align: center; color: #f2f2f2; margin-top: 10%;">
+        <h1 style="text-align: center; color: #ff8802; ">Admin Login</h1>
         <form method="POST">
             <label>Email</label><br />
             <input type="text" name="email"><br />
