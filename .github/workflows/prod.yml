@@ -13,7 +13,6 @@ on:
 
 jobs:
   Build-image:
-    needs: Configure-environment
     runs-on: ubuntu-latest
     steps:
         -
