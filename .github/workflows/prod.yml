@@ -10,7 +10,8 @@ on:
   
 jobs:
   Configure-environment:
-      runs-on: blog 
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
+      runs-on: ubuntu 
       steps:
         -
           name: checkout source
@@ -29,7 +30,7 @@ jobs:
   Build-image:
     needs: Configure-environment
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
-    runs-on: blog
+    runs-on: ubuntu
     steps:
         -
           name: build image
@@ -42,7 +43,8 @@ jobs:
 
   Deploy-image:
     needs: Build-image
-    runs-on: blog
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
+    runs-on: ubuntu
     steps:
         -
           name: deploy using docker-compose plugin
