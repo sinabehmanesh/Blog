@@ -4,6 +4,7 @@ run-name: blog deployment
 on:
   push:
     branches: [main]
+
   pull_request:
     branches:
       - "*"
