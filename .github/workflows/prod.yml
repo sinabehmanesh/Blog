@@ -11,24 +11,7 @@ on:
     branches:
       - "*"
   
-jobs:
-  Configure-environment:
-      runs-on: ubuntu-latest 
-      steps:
-        -
-          name: checkout source
-          uses: actions/checkout@v3
-
-        -
-          name: image buildx setup
-          uses: docker/setup-buildx-action@v1
-        -
-          name: create .env file
-          run: touch .env || true
-        -
-          name: bring down the current deployment using docker-compose plugin
-          run: docker compose down
-      
+jobs:    
   Build-image:
     needs: Configure-environment
     runs-on: ubuntu-latest
@@ -36,6 +19,9 @@ jobs:
         -
           name: checkout source
           uses: actions/checkout@v3
+        -
+          name: create .env file
+          run: touch .env || true
         -
           name: build image
           uses: docker/build-push-action@v4
