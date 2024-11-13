@@ -21,7 +21,8 @@ jobs:
         -
           name: install linters
           run: |
-              snap install golangci-lint
+              golangci-lint || true
+              sudo snap install golangci-lint
         -
           name: lint Golang
           run: |
