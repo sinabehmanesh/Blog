@@ -12,18 +12,33 @@ on:
       - "*"
 
 jobs:
+  Code-quality-check:
+    runs-on: ubuntu-latest
+    steps:
+        -
+          name: checkout source
+          uses: actions/checkout@4
+        -
+          name: install linters
+          run: |
+              snap install golangci-lint
+        -
+          name: lint Golang
+          run: |
+              pwd
+              ls
   Build-image:
     runs-on: ubuntu-latest
     steps:
         -
           name: checkout source
-          uses: actions/checkout@4.2.2
+          uses: actions/checkout@4
         -
           name: create .env file
           run: touch .env || true
         -
           name: build image
-          uses: docker/build-push-action@v6.9.0
+          uses: docker/build-push-action@v6
           with:
             context: .
             file: ./Dockerfile
