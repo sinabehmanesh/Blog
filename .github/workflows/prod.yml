@@ -13,7 +13,7 @@ on:
   
 jobs:
   Configure-environment:
-      runs-on: ubuntu 
+      runs-on: ubuntu-latest 
       steps:
         -
           name: checkout source
@@ -32,7 +32,7 @@ jobs:
   Build-image:
     needs: Configure-environment
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     steps:
         -
           name: build image
@@ -46,7 +46,7 @@ jobs:
   Deploy-image:
     needs: Build-image
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     steps:
         -
           name: deploy using docker-compose plugin
