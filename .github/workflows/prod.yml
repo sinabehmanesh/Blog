@@ -10,7 +10,6 @@ on:
   
 jobs:
   Configure-environment:
-      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
       runs-on: blog 
       steps:
         -
