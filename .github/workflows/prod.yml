@@ -3,7 +3,9 @@ run-name: blog deployment
 
 on:
   push:
-    branches: [main]
+    branches:
+      - "main"
+      - 'dev'
 
   pull_request:
     branches:
@@ -11,7 +13,6 @@ on:
   
 jobs:
   Configure-environment:
-      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
       runs-on: ubuntu 
       steps:
         -
