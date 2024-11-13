@@ -10,8 +10,8 @@ on:
   pull_request:
     branches:
       - "*"
-  
-jobs:    
+
+jobs:
   Build-image:
     needs: Configure-environment
     runs-on: ubuntu-latest
