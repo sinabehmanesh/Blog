@@ -3,48 +3,46 @@ run-name: blog deployment
 
 on:
   push:
-    branches: [main]
-  
+    branches:
+      - "main"
+      - 'dev'
+
+  pull_request:
+    branches:
+      - "*"
+
 jobs:
-  Configure-environment:
-      runs-on: blog 
-      steps:
+  Code-quality-check:
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    steps:
+        - name: checkout source
+          uses: actions/checkout@v3
+
+        - name: Set up Go
+          uses: actions/setup-go@v4
+          with:
+            go-version: '1.21'
+
+        - name: Install golangci-lint
+          run: |
+            curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.54.2
+
+        - name: Run golangci-lint
+          run: golangci-lint run --timeout=5m
+  
+  Build-image:
+    runs-on: ubuntu-latest
+    steps:
         -
           name: checkout source
           uses: actions/checkout@v3
-
         -
-          name: image buildx setup
-          uses: docker/setup-buildx-action@v1
-        
-        -
-          name: Configure .env file
-          run: |
-            ls -a ;
-            pwd ;
-            sed -i 's/DB_USERNAME=/DB_USERNAME=${{ secrets.PROD_DB_USERNAME }}/g' .env
-            sed -i 's/DB_PASSWORD=/DB_PASSWORD=${{ secrets.PROD_DB_PASSWORD }}/g' .env
-            sed -i 's/DB_HOST=/DB_HOST=${{ secrets.PROD_DB_HOST }}/g' .env
-            sed -i 's/DB_PORT=/DB_PORT=${{ secrets.PROD_DB_PORT }}/g' .env
-            sed -i 's/API_PORT=/API_PORT=${{ secrets.API_PORT }}/g' .env
-        # -
-          # name: login to docker
-          # uses: docker/login-action@v2
-          # with:
-          #   username: ${{ docker.username }}
-          #   password: ${{ docker.password }}
-
-        -
-          name: bring down the current deployment using docker-compose plugin
-          run: docker compose down
-      
-  Build-image:
-    needs: Configure-environment
-    runs-on: blog
-    steps:
+          name: create .env file
+          run: touch .env || true
         -
           name: build image
-          uses: docker/build-push-action@v4
+          uses: docker/build-push-action@v6
           with:
             context: .
             file: ./Dockerfile
@@ -53,7 +51,8 @@ jobs:
 
   Deploy-image:
     needs: Build-image
-    runs-on: blog
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
     steps:
         -
           name: deploy using docker-compose plugin

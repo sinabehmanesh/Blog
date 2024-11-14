@@ -12,4 +12,6 @@ RUN go build -o blog main.go
 
 EXPOSE 3000
 
+USER sina
+
 CMD [ "/app/blog" ]
